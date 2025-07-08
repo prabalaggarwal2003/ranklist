@@ -1,12 +1,13 @@
 import React from 'react'
-import LeetCodeProfile from './components/LeetCodeProfile'
+import Header from './components/Header'
+import Home from './components/Home'
 
 function App() {
   return (
-    <div style={{ maxWidth: "600px", margin: "2rem auto", fontFamily: "sans-serif" }}>
-      <h1>My LeetCode Stats</h1>
-      <LeetCodeProfile/>
-    </div>
+    <>
+      <Header/>
+      <Home/>
+    </>
   )
 }
 
