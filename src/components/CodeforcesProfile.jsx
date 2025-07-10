@@ -3,22 +3,19 @@ import React, { useEffect, useState } from 'react';
 const CodeforcesProfile = () => {
   const [profiles, setProfiles] = useState([]);
   const [error, setError] = useState('');
+  const [selectedBranch, setSelectedBranch] = useState('All');
+  const [selectedYear, setSelectedYear] = useState('All');
 
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        // Fetch your JSON file from public
-        const res = await fetch('/4th_year.json');
+        const res = await fetch('/students.json');
         const students = await res.json();
-
-        // Get the codeforces handles
         const handles = students.map(s => s.codeforces);
 
-        // Fetch from your serverless API
         const apiRes = await fetch(`/api/codeforces?handles=${handles.join(",")}`);
         const data = await apiRes.json();
 
-        // Merge student data into the api data
         const enriched = data.map(profile => {
           const student = students.find(s => s.codeforces === profile.handle) || {};
           return {
@@ -28,9 +25,7 @@ const CodeforcesProfile = () => {
           };
         });
 
-        // Sort by calculated score descending
         enriched.sort((a, b) => b.score - a.score);
-
         setProfiles(enriched);
       } catch (err) {
         console.error("Failed to load Codeforces profiles:", err);
@@ -47,11 +42,37 @@ const CodeforcesProfile = () => {
     return (solved * 4) + (rating * 0.6);
   };
 
+  const filteredProfiles = profiles.filter(profile => {
+    const branchMatch = selectedBranch === 'All' || profile.branch === selectedBranch;
+    const yearMatch = selectedYear === 'All' || profile.year === selectedYear;
+    return branchMatch && yearMatch;
+  });
+
   if (error) return <div>{error}</div>;
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4 text-black">Codeforces Leaderboard</h1>
+
+      <div className="flex gap-4 mb-4">
+        <select className="p-2 border rounded" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
+          <option value="All">All Branches</option>
+          <option value="CSE">CSE</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="IT">IT</option>
+          <option value="AIDS">AIDS</option>
+          <option value="CS-DS">CS-DS</option>
+        </select>
+        <select className="p-2 border rounded" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+          <option value="All">All Years</option>
+          <option value="1st year">1st year</option>
+          <option value="2nd year">2nd year</option>
+          <option value="3rd year">3rd year</option>
+          <option value="4th year">4th year</option>
+        </select>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-slate-800 shadow-md rounded-lg overflow-hidden">
           <thead>
@@ -68,7 +89,7 @@ const CodeforcesProfile = () => {
             </tr>
           </thead>
           <tbody>
-            {profiles.map((profile, idx) => (
+            {filteredProfiles.map((profile, idx) => (
               <tr key={profile.handle} className="border-t border-slate-700">
                 <td className="px-4 py-2 font-semibold">{idx + 1}</td>
                 <td className="py-2 px-4 font-semibold">

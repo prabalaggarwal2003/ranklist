@@ -4,12 +4,13 @@ const Combined = () => {
   const [profiles, setProfiles] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [selectedBranch, setSelectedBranch] = useState('All');
+  const [selectedYear, setSelectedYear] = useState('All');
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        // Load your JSON file from public folder
-        const res = await fetch('/4th_year.json');
+        const res = await fetch('/students.json');
         const students = await res.json();
 
         const lcPromises = students.map(async student => {
@@ -35,7 +36,7 @@ const Combined = () => {
             const profile = cfData[0];
             const solved = profile.solvedCount || 0;
             const rating = profile.userInfo?.rating || 0;
-            const cfScore = (solved * 4) + (rating * 0.7); // your adjusted formula
+            const cfScore = (solved * 4) + (rating * 0.7);
             return { handle: student.codeforces, cfScore };
           } catch {
             return { handle: student.codeforces, cfScore: 0 };
@@ -45,13 +46,9 @@ const Combined = () => {
         const lcResults = await Promise.all(lcPromises);
         const cfResults = await Promise.all(cfPromises);
 
-        // Merge data
         const combined = lcResults.map(student => {
           const cf = cfResults.find(c => c.handle === student.codeforces);
-          return {
-            ...student,
-            cfScore: cf?.cfScore || 0
-          };
+          return { ...student, cfScore: cf?.cfScore || 0 };
         });
 
         setProfiles(combined);
@@ -65,12 +62,38 @@ const Combined = () => {
     fetchAllData();
   }, []);
 
+  const filteredProfiles = profiles.filter(profile => {
+    const branchMatch = selectedBranch === 'All' || profile.branch === selectedBranch;
+    const yearMatch = selectedYear === 'All' || profile.year === selectedYear;
+    return branchMatch && yearMatch;
+  });
+
   if (loading) return <div className="p-6">Loading...</div>;
   if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Combined Leaderboard</h1>
+      <h1 className="text-2xl text-black font-bold mb-4">Combined Leaderboard</h1>
+
+      <div className="flex gap-4 mb-4">
+        <select className="p-2 border rounded" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
+          <option value="All">All Branches</option>
+          <option value="CSE">CSE</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="IT">IT</option>
+          <option value="AIDS">AIDS</option>
+          <option value="CS-DS">CS-DS</option>
+        </select>
+        <select className="p-2 border rounded" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+          <option value="All">All Years</option>
+          <option value="1st year">1st year</option>
+          <option value="2nd year">2nd year</option>
+          <option value="3rd year">3rd year</option>
+          <option value="4th year">4th year</option>
+        </select>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-black">
           <thead className="bg-gray-200">
@@ -85,7 +108,7 @@ const Combined = () => {
             </tr>
           </thead>
           <tbody>
-            {profiles.map((student, idx) => (
+            {filteredProfiles.map((student, idx) => (
               <tr key={student.username} className="border-t">
                 <td className="px-4 py-2 font-semibold">{idx + 1}</td>
                 <td className="px-4 py-2">

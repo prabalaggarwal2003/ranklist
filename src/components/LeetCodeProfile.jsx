@@ -3,20 +3,19 @@ import React, { useEffect, useState } from 'react';
 const LeetCodeProfile = () => {
   const [profiles, setProfiles] = useState([]);
   const [error, setError] = useState('');
+  const [selectedBranch, setSelectedBranch] = useState('All');
+  const [selectedYear, setSelectedYear] = useState('All');
 
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        // Fetch JSON with names + branch etc.
-        const res = await fetch('/4th_year.json');
-        const users = await res.json(); 
+        const res = await fetch('/students.json');
+        const users = await res.json();
         const usernames = users.map(u => u.username);
 
-        // Fetch from your serverless API
         const apiRes = await fetch(`/api/leetcode?usernames=${usernames.join(",")}`);
         const data = await apiRes.json();
 
-        // Merge names, branch, year, enrollment into profiles
         const mergedProfiles = data.map(profile => {
           const match = users.find(u => u.username === profile.username);
           return {
@@ -28,7 +27,6 @@ const LeetCodeProfile = () => {
           };
         });
 
-        // Compute weighted score
         mergedProfiles.forEach(profile => {
           const stats = profile.submitStatsGlobal.acSubmissionNum.reduce((acc, cur) => {
             acc[cur.difficulty] = cur.count;
@@ -39,9 +37,7 @@ const LeetCodeProfile = () => {
           profile.breakdown = stats;
         });
 
-        // Sort descending by weighted score
         mergedProfiles.sort((a, b) => b.totalWeighted - a.totalWeighted);
-
         setProfiles(mergedProfiles);
       } catch (err) {
         console.error("Failed to load profiles:", err);
@@ -52,11 +48,37 @@ const LeetCodeProfile = () => {
     fetchProfiles();
   }, []);
 
+  const filteredProfiles = profiles.filter(profile => {
+    const branchMatch = selectedBranch === 'All' || profile.branch === selectedBranch;
+    const yearMatch = selectedYear === 'All' || profile.year === selectedYear;
+    return branchMatch && yearMatch;
+  });
+
   if (error) return <div>{error}</div>;
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Leetcode Leaderboard</h1>
+
+      <div className="flex gap-4 mb-4">
+        <select className="p-2 border rounded" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
+          <option value="All">All Branches</option>
+          <option value="CSE">CSE</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="IT">IT</option>
+          <option value="AIDS">AIDS</option>
+          <option value="CS-DS">CS-DS</option>
+        </select>
+        <select className="p-2 border rounded" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+          <option value="All">All Years</option>
+          <option value="1st year">1st year</option>
+          <option value="2nd year">2nd year</option>
+          <option value="3rd year">3rd year</option>
+          <option value="4th year">4th year</option>
+        </select>
+      </div>
+
       <table className="min-w-full bg-slate-800 text-white rounded-lg shadow-md">
         <thead>
           <tr>
@@ -71,7 +93,7 @@ const LeetCodeProfile = () => {
           </tr>
         </thead>
         <tbody>
-          {profiles.map((profile, idx) => {
+          {filteredProfiles.map((profile, idx) => {
             const stats = profile.breakdown || {};
             return (
               <tr key={profile.username} className="border-b border-slate-700">
