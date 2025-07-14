@@ -61,7 +61,7 @@ const LeetCodeProfile = () => {
       <h1 className="text-2xl font-bold mb-4">Leetcode Leaderboard</h1>
 
       <div className="flex gap-4 mb-4">
-        <select className="p-2 border rounded" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
+        <select className="p-2 border rounded text-black" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
           <option value="All">All Branches</option>
           <option value="CSE">CSE</option>
           <option value="ECE">ECE</option>
@@ -70,7 +70,7 @@ const LeetCodeProfile = () => {
           <option value="AIDS">AIDS</option>
           <option value="CS-DS">CS-DS</option>
         </select>
-        <select className="p-2 border rounded" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+        <select className="p-2 border rounded text-black" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
           <option value="All">All Years</option>
           <option value="1st year">1st year</option>
           <option value="2nd year">2nd year</option>
