@@ -58,7 +58,7 @@ const LeetCodeProfile = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Leetcode Leaderboard</h1>
+      <h1 className="text-2xl font-bold mb-4 text-black">Leetcode Leaderboard</h1>
 
       <div className="flex gap-4 mb-4">
         <select className="p-2 border rounded text-black" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
@@ -79,6 +79,7 @@ const LeetCodeProfile = () => {
         </select>
       </div>
 
+      <div className="overflow-x-auto">
       <table className="min-w-full bg-slate-800 text-white rounded-lg shadow-md">
         <thead>
           <tr>
@@ -86,7 +87,7 @@ const LeetCodeProfile = () => {
             <th className="py-2 px-4 text-left">Name (Username)</th>
             <th className="py-2 px-4 text-left">Branch</th>
             <th className="py-2 px-4 text-left">Year</th>
-            <th className="py-2 px-4 text-left">Enrollment No.</th>
+            <th className="py-2 px-4 text-left">Enrolment No.</th>
             <th className="py-2 px-4 text-left">Questions Solved</th>
             <th className="py-2 px-4 text-left">Score</th>
             <th className="py-2 px-4 text-left">Rank</th>
@@ -96,10 +97,10 @@ const LeetCodeProfile = () => {
           {filteredProfiles.map((profile, idx) => {
             const stats = profile.breakdown || {};
             return (
-              <tr key={profile.username} className="border-b border-slate-700">
-                <td className="py-2 px-4">{idx + 1}</td>
+              <tr key={profile.username} className="border-t border-slate-700">
+                <td className="py-2 px-4 font-semibold">{idx + 1}</td>
                 <td className="py-2 px-4 font-semibold">
-                  {profile.name} <span className="text-sm text-gray-400">({profile.username})</span>
+                  {profile.name} <span className="text-sm text-gray-500">({profile.username})</span>
                 </td>
                 <td className="py-2 px-4">{profile.branch}</td>
                 <td className="py-2 px-4">{profile.year}</td>
@@ -117,6 +118,7 @@ const LeetCodeProfile = () => {
           })}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

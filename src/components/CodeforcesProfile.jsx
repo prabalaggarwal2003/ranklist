@@ -74,15 +74,15 @@ const CodeforcesProfile = () => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-slate-800 shadow-md rounded-lg overflow-hidden">
+        <table className="min-w-full bg-slate-800 shadow-md rounded-lg text-white">
           <thead>
             <tr>
               <th className="px-4 py-2 text-left">S. No.</th>
               <th className="px-4 py-2 text-left">Name (Username)</th>
               <th className="px-4 py-2 text-left">Branch</th>
               <th className="px-4 py-2 text-left">Year</th>
-              <th className="px-4 py-2 text-left">Enrollment</th>
-              <th className="px-4 py-2 text-left">Rating</th>
+              <th className="px-4 py-2 text-left">Enrolment No.</th>
+              <th className="px-4 py-2 text-left">Contest Rating</th>
               <th className="px-4 py-2 text-left">Problems Solved</th>
               <th className="px-4 py-2 text-left">Score</th>
               <th className="px-4 py-2 text-left">Rank</th>
@@ -101,7 +101,7 @@ const CodeforcesProfile = () => {
                 <td className="px-4 py-2">{profile.userInfo?.rating ?? '-'}</td>
                 <td className="px-4 py-2">{profile.solvedCount ?? '-'}</td>
                 <td className="px-4 py-2">{profile.score.toFixed(2)}</td>
-                <td className="px-4 py-2 font-bold">{idx + 1}</td>
+                <td className="px-4 py-2 font-bold">#{idx + 1}</td>
               </tr>
             ))}
           </tbody>

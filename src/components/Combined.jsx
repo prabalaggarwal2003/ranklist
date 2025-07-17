@@ -36,7 +36,7 @@ const Combined = () => {
             const profile = cfData[0];
             const solved = profile.solvedCount || 0;
             const rating = profile.userInfo?.rating || 0;
-            const cfScore = (solved * 4) + (rating * 0.7);
+            const cfScore = (solved * 4) + (rating * 0.6);
             return { handle: student.codeforces, cfScore };
           } catch {
             return { handle: student.codeforces, cfScore: 0 };
@@ -68,9 +68,6 @@ const Combined = () => {
     return branchMatch && yearMatch;
   });
 
-  if (loading) return <div className="p-6">Loading...</div>;
-  if (error) return <div className="p-6 text-red-500">{error}</div>;
-
   return (
     <div className="p-6">
       <h1 className="text-2xl text-black font-bold mb-4">Combined Leaderboard</h1>
@@ -95,23 +92,23 @@ const Combined = () => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-black">
-          <thead className="bg-gray-200">
+        <table className="min-w-full bg-slate-800 shadow-md rounded-lg text-white">
+          <thead>
             <tr>
-              <th className="px-4 py-2">S. No.</th>
-              <th className="px-4 py-2">Name (Username)</th>
-              <th className="px-4 py-2">Branch</th>
-              <th className="px-4 py-2">Year</th>
-              <th className="px-4 py-2">Enrollment</th>
-              <th className="px-4 py-2">LeetCode Score</th>
-              <th className="px-4 py-2">Codeforces Score</th>
+              <th className="px-4 py-2 text-left">S. No.</th>
+              <th className="px-4 py-2 text-left">Name (Username)</th>
+              <th className="px-4 py-2 text-left">Branch</th>
+              <th className="px-4 py-2 text-left">Year</th>
+              <th className="px-4 py-2 text-left">Enrolment No.</th>
+              <th className="px-4 py-2 text-left">LeetCode Score</th>
+              <th className="px-4 py-2 text-left">Codeforces Score</th>
             </tr>
           </thead>
           <tbody>
-            {filteredProfiles.map((student, idx) => (
-              <tr key={student.username} className="border-t">
+            {!loading && !error && filteredProfiles.map((student, idx) => (
+              <tr key={student.username} className="border-t border-slate-700">
                 <td className="px-4 py-2 font-semibold">{idx + 1}</td>
-                <td className="px-4 py-2">
+                <td className="px-4 py-2 font-semibold">
                   {student.name} <span className="text-sm text-gray-500">({student.username})</span>
                 </td>
                 <td className="px-4 py-2">{student.branch}</td>
