@@ -3,40 +3,43 @@ import LeetCodeProfile from '../components/LeetCodeProfile.jsx';
 import CodeforcesProfile from '../components/CodeforcesProfile.jsx';
 import Combined from '../components/Combined.jsx';
 
-const Home = () => {
-  const [selected, setSelected] = useState('leetcode');
+const DSA = () => {
+  const [selected, setSelected] = useState('');
 
   return (
-    <div className="p-6 min-h-screen text-white">
-      <div className="flex gap-4 mb-6">
+    <div className="p-6 text-white mt-14">
+      <div className="flex justify-center gap-4 mb-6">
         <button
-          className={`px-4 py-2 rounded 
-            ${selected === 'leetcode' ? 'bg-blue-600' : 'bg-gray-600 hover:bg-blue-700'}`}
+          className='rounded-md border border-white/10 bg-white/10
+          shadow-lg backdrop-filter backdrop-blur-md w-60 text-center p-2 text-white cursor-pointer'
           onClick={() => setSelected('leetcode')}
         >
           LeetCode Leaderboard
         </button>
         <button
-          className={`px-4 py-2 rounded 
-            ${selected === 'codeforces' ? 'bg-red-600' : 'bg-gray-600 hover:bg-red-700'}`}
+          className='rounded-md border border-white/10 bg-white/10
+    shadow-lg backdrop-filter backdrop-blur-md w-60 text-center p-2 text-white cursor-pointer'
           onClick={() => setSelected('codeforces')}
         >
           Codeforces Leaderboard
         </button>
         <button
-          className={`px-4 py-2 rounded 
-            ${selected === 'combined' ? 'bg-green-600' : 'bg-gray-600 hover:bg-green-700'}`}
+          className='rounded-md border border-white/10 bg-white/10
+    shadow-lg backdrop-filter backdrop-blur-md w-60 text-center p-2 text-white cursor-pointer'
           onClick={() => setSelected('combined')}
         >
           Combined Leaderboard
         </button>
       </div>
 
+<div>
       {selected === 'leetcode' && <LeetCodeProfile />}
       {selected === 'codeforces' && <CodeforcesProfile />}
       {selected === 'combined' && <Combined />}
+</div>
+      
     </div>
   );
 };
 
-export default Home;
+export default DSA;

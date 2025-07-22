@@ -1,13 +1,15 @@
 import React from 'react'
 import Header from './components/Header'
-import Home from './components/Home'
+import {Outlet} from 'react-router'
+import Footer from './components/Footer'
 
 function App() {
   return (
-    <>
+    <div className='font-poppins overflow-x-hidden'>
       <Header/>
-      <Home/>
-    </>
+      <Outlet/>
+      <Footer/>
+    </div>
   )
 }
 

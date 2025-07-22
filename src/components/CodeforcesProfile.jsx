@@ -51,11 +51,16 @@ const CodeforcesProfile = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4 text-black">Codeforces Leaderboard</h1>
+    <div className="p-6 mt-12">
+
+      <div className='flex flex-row justify-between'>
+      <div>
+      <h1 className="text-2xl font-bold mb-4 text-white">Codeforces Leaderboard</h1>
+      </div>
 
       <div className="flex gap-4 mb-4">
-        <select className="p-2 border rounded text-black" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
+        <select className="rounded-md border border-white/10 bg-white/10
+          shadow-lg backdrop-filter backdrop-blur-md text-center p-2 text-white cursor-pointer" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
           <option value="All">All Branches</option>
           <option value="CSE">CSE</option>
           <option value="ECE">ECE</option>
@@ -64,7 +69,8 @@ const CodeforcesProfile = () => {
           <option value="AIDS">AIDS</option>
           <option value="CS-DS">CS-DS</option>
         </select>
-        <select className="p-2 border rounded text-black" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+        <select className="rounded-md border border-white/10 bg-white/10
+          shadow-lg backdrop-filter backdrop-blur-md text-center p-2 text-white cursor-pointer" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
           <option value="All">All Years</option>
           <option value="1st year">1st year</option>
           <option value="2nd year">2nd year</option>
@@ -72,6 +78,8 @@ const CodeforcesProfile = () => {
           <option value="4th year">4th year</option>
         </select>
       </div>
+      </div>
+      
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-slate-800 shadow-md rounded-lg text-white">
