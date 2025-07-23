@@ -82,7 +82,8 @@ const CodeforcesProfile = () => {
       
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-slate-800 shadow-md rounded-lg text-white">
+        <table className="min-w-full rounded-md border border-white/10 bg-white/10
+          shadow-lg backdrop-filter backdrop-blur-md text-justify p-2 text-white">
           <thead>
             <tr>
               <th className="px-4 py-2 text-left">S. No.</th>

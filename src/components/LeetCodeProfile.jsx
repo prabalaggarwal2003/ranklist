@@ -89,7 +89,8 @@ const LeetCodeProfile = () => {
       
 
       <div className="overflow-x-auto">
-      <table className="min-w-full bg-slate-800 text-white rounded-lg shadow-md">
+      <table className="min-w-full rounded-md border border-white/10 bg-white/10
+          shadow-lg backdrop-filter backdrop-blur-md text-justify p-2 text-white">
         <thead>
           <tr>
             <th className="py-2 px-4 text-left">S. No.</th>

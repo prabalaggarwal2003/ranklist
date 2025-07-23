@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import Marquee from '../components/Marquee'
 
 function Home() {
   return (
@@ -51,6 +52,10 @@ function Home() {
         of academic and extracurricular excellence.
         </p>
       </div>
+    </div>
+
+    <div className='container mx-auto w-full flex justify-center items-center overflow-hidden mt-20'>
+      <Marquee/>
     </div>
 
     <div className='flex flex-row justify-center mt-20 gap-20'>
