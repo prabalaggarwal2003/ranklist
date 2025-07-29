@@ -1,8 +1,13 @@
 import React from 'react'
+import OpenSource from '../components/OpenSource'
 
 function Opensource() {
   return (
-    <div>Opensource</div>
+    <>
+    <div>
+      <OpenSource/>
+    </div>
+    </>
   )
 }
 

@@ -5,7 +5,7 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import Home from './pages/Home.jsx'
 import DSA from './pages/DSA.jsx'
-import Webd from './pages/Webd.jsx'
+import Dev from './pages/Dev.jsx'
 import Opensource from './pages/Opensource.jsx'
 
 const router = createBrowserRouter(
@@ -23,8 +23,8 @@ const router = createBrowserRouter(
           element: <DSA/>,
         },
         {
-          path: "/webd",
-          element: <Webd/>,
+          path: "/dev",
+          element: <Dev/>,
         },
         {
           path: "/opensource",

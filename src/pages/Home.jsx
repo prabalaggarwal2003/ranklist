@@ -15,7 +15,7 @@ function Home() {
       <div className='rounded-md border border-white/10 bg-white/10
     shadow-lg backdrop-filter backdrop-blur-md w-60 text-center p-2 text-white'>
         <h2>
-          <Link to='/webd'>Web Dev Leaderboard</Link> 
+          <Link to='/dev'>Dev Leaderboard</Link> 
         </h2>
       </div>
       <div className='rounded-md border border-white/10 bg-white/10
