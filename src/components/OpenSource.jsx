@@ -96,6 +96,31 @@ const OpenSource = () => {
     return branchMatch && yearMatch;
   });
 
+  const today = new Date();
+  const formatDate = (date) => date.toISOString().split("T")[0];
+
+  const getFixedContributions = (contributions) => {
+    const todayStr = formatDate(today);
+    const contributionsMap = new Map(
+      contributions.map((d) => [d.date, d])
+    );
+
+    const fixed = [];
+    for (let i = 279; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(today.getDate() - i);
+      const dateStr = formatDate(date);
+      const day = contributionsMap.get(dateStr);
+      fixed.push(
+        day || {
+          date: dateStr,
+          contributionCount: 0,
+          color: "#161b22",
+        }
+      );
+    }
+    return fixed;
+  };
 
   return (
     <div className="p-12 mt-12">
@@ -149,49 +174,47 @@ const OpenSource = () => {
             </tr>
           </thead>
           <tbody>
-            {!loading 
-            && filteredData.map((user, idx) => (
-              <tr key={user.github} className="border-t border-slate-700">
-                <td className="px-4 py-2 font-semibold">{idx + 1}</td>
-                <td className="px-4 py-2 font-semibold">
-                  {user.name}
-                  <div className="text-sm text-gray-400">({user.github})</div>
-                </td>
-                <td className="px-4 py-2">{user.branch}</td>
-                <td className="px-4 py-2">{user.year}</td>
-                <td className="px-4 py-2">
-                  <div className="flex gap-[1.5px] overflow-x-auto">
-                    {Array.from({
-                      length: Math.ceil(user.contributions.length / 7),
-                    }).map((_, weekIndex) => {
-                      const week = user.contributions.slice(
-                        weekIndex * 7,
-                        weekIndex * 7 + 7
-                      );
-                      return (
-                        <div key={weekIndex} className="flex flex-col gap-[1px]">
-                          {week.map((day) => (
-                            <div
-                              key={day.date}
-                              title={`${day.date}: ${day.contributionCount} contributions`}
-                              className="w-2 h-2 rounded-[2px]"
-                              style={{
-                                backgroundColor: day.color,
-                                minWidth: "8px",
-                              }}
-                            />
-                          ))}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </td>
-                <td className="px-8 py-2">{user.stars}</td>
-                <td className="px-8 py-2">{user.publicRepos}</td>
-                <td className="px-8 py-2">{user.mergedPRs}</td>
-                <td className="px-16 py-2">{user.reposContributed}</td>
-              </tr>
-            ))}
+            {!loading &&
+              filteredData.map((user, idx) => (
+                <tr key={user.github} className="border-t border-slate-700">
+                  <td className="px-4 py-2 font-semibold">{idx + 1}</td>
+                  <td className="px-4 py-2 font-semibold">
+                    {user.name}
+                    <div className="text-sm text-gray-400">({user.github})</div>
+                  </td>
+                  <td className="px-4 py-2">{user.branch}</td>
+                  <td className="px-4 py-2">{user.year}</td>
+                  <td className="px-4 py-2">
+                    <div className="flex gap-[1.5px] overflow-x-auto">
+                      {(() => {
+                        const fixed = getFixedContributions(user.contributions);
+                        return Array.from({ length: 40 }).map((_, weekIndex) => {
+                          const week = fixed.slice(weekIndex * 7, weekIndex * 7 + 7);
+                          return (
+                            <div key={weekIndex} className="flex flex-col gap-[1px]">
+                              {week.map((day) => (
+                                <div
+                                  key={day.date}
+                                  title={`${day.date}: ${day.contributionCount} contributions`}
+                                  className="w-2 h-2 rounded-[2px]"
+                                  style={{
+                                    backgroundColor: day.color,
+                                    minWidth: "8px",
+                                  }}
+                                />
+                              ))}
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </td>
+                  <td className="px-8 py-2">{user.stars}</td>
+                  <td className="px-8 py-2">{user.publicRepos}</td>
+                  <td className="px-8 py-2">{user.mergedPRs}</td>
+                  <td className="px-16 py-2">{user.reposContributed}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
