@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 function Header() {
   return (
@@ -9,7 +10,7 @@ function Header() {
         </div>
         <div>
             <h2 className='text-2xl mr-8 mt-3.5 text-white'>
-                Student Leaderboard
+            <Link to='/'>Student Leaderboard</Link> 
             </h2>
         </div>
     </div>
