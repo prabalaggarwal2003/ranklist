@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.bpitindia.ranklist.twa",
+        "sha256_cert_fingerprints": ["8E:AB:FD:D9:2F:66:A8:89:A3:FF:21:35:2C:B9:36:D6:68:15:B9:8F:43:8A:0E:95:30:60:BA:2B:33:04:29:2F"]
+      }
+    }]
