@@ -2,7 +2,7 @@ import React from 'react'
 
 function Dev() {
   return (
-    <div className='text-white text-3xl text-center'>⚠️ Section under development</div>
+    <div className='text-white text-2xl text-center'>⚠️ Section under development</div>
   )
 }
 
