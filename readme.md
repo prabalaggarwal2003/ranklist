@@ -1,5 +1,6 @@
-Momentum Leaderboard
-Project Description
+# Momentum Leaderboard
+
+## Project Description
 The Momentum Leaderboard is a dynamic web-based system designed to track and display student performance in a transparent and visually engaging manner. Built for academic institutions, this platform consolidates student scores, calculates rankings, and highlights top performers with podium-style visualization to foster healthy competition and motivation.​
 
 The system provides real-time performance tracking through seamless integration with Google Sheets API, eliminating the need for complex database infrastructure. Students and administrators can view rankings with interactive features including sorting, filtering, and dynamic updates, making it ideal for academic competitions, coding challenges, and classroom engagement.​
