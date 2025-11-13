@@ -378,44 +378,46 @@ const CodeforcesProfile = () => {
     return branchMatch && yearMatch;
   });
 
-  if (error) return <div>{error}</div>;
+  if (error) return <div className="text-red-500 p-4">{error}</div>;
 
   return (
-    <div className="p-6 mt-12">
-      <div className="flex flex-row justify-between">
-        <h1 className="text-2xl font-bold mb-4 text-white">Codeforces Leaderboard</h1>
+    <div className="p-4 sm:p-6 mt-4 sm:mt-12">
+      {/* Header & Filters */}
+      <div className="flex flex-col sm:flex-row sm:justify-between gap-4 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-white">Codeforces Leaderboard</h1>
 
-        <div className="flex gap-4 mb-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
           <select
-            className="rounded-md border border-white/10 bg-white/10 shadow-lg backdrop-filter backdrop-blur-md text-center p-2 text-white cursor-pointer"
+            className="rounded-md border border-white/10 bg-white/10 shadow-lg backdrop-filter backdrop-blur-md text-center px-3 sm:px-4 py-2 text-white text-sm sm:text-base cursor-pointer w-full sm:w-auto"
             value={selectedBranch}
             onChange={(e) => setSelectedBranch(e.target.value)}
           >
-            <option value="All">All Branches</option>
-            <option value="CSE">CSE</option>
-            <option value="ECE">ECE</option>
-            <option value="EEE">EEE</option>
-            <option value="IT">IT</option>
-            <option value="AIDS">AIDS</option>
-            <option value="CS-DS">CS-DS</option>
+            <option value="All" className="bg-gray-700 text-white">All Branches</option>
+            <option value="CSE" className="bg-gray-700 text-white">CSE</option>
+            <option value="ECE" className="bg-gray-700 text-white">ECE</option>
+            <option value="EEE" className="bg-gray-700 text-white">EEE</option>
+            <option value="IT" className="bg-gray-700 text-white">IT</option>
+            <option value="AIDS" className="bg-gray-700 text-white">AIDS</option>
+            <option value="CS-DS" className="bg-gray-700 text-white">CS-DS</option>
           </select>
 
           <select
-            className="rounded-md border border-white/10 bg-white/10 shadow-lg backdrop-filter backdrop-blur-md text-center p-2 text-white cursor-pointer"
+            className="rounded-md border border-white/10 bg-white/10 shadow-lg backdrop-filter backdrop-blur-md text-center px-3 sm:px-4 py-2 text-white text-sm sm:text-base cursor-pointer w-full sm:w-auto"
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
           >
-            <option value="All">All Batches</option>
-            <option value="2025-2029">2025-2029</option>
-            <option value="2024-2028">2024-2028</option>
-            <option value="2023-2027">2023-2027</option>
-            <option value="2022-2026">2022-2026</option>
+            <option value="All" className="bg-gray-700 text-white">All Batches</option>
+            <option value="2025-2029" className="bg-gray-700 text-white">2025-2029</option>
+            <option value="2024-2028" className="bg-gray-700 text-white">2024-2028</option>
+            <option value="2023-2027" className="bg-gray-700 text-white">2023-2027</option>
+            <option value="2022-2026" className="bg-gray-700 text-white">2022-2026</option>
           </select>
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full rounded-md border border-white/10 bg-white/10 shadow-lg backdrop-filter backdrop-blur-md text-justify p-2 text-white">
+      {/* Desktop Table View */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="min-w-full rounded-md border border-white/10 bg-white/10 shadow-lg backdrop-filter backdrop-blur-md text-white">
           <thead>
             <tr>
               <th className="py-2 px-4 text-left">Rank</th>
@@ -446,6 +448,55 @@ const CodeforcesProfile = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="md:hidden grid grid-cols-1 gap-4">
+        {filteredProfiles.map((profile, idx) => (
+          <div
+            key={profile.handle}
+            className="rounded-md border border-white/10 bg-white/10 shadow-lg backdrop-filter backdrop-blur-md p-4 text-white"
+          >
+            <div className="flex justify-between items-start mb-3">
+              <div>
+                <div className="font-bold text-lg">{profile.name || "Unknown"}</div>
+                <div className="text-sm text-gray-400">@{profile.handle || "N/A"}</div>
+              </div>
+              <div className="text-xl font-bold">#{idx + 1}</div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 mb-3 text-sm">
+              <div>
+                <span className="text-gray-400">Branch:</span> {profile.branch}
+              </div>
+              <div>
+                <span className="text-gray-400">Batch:</span> {profile.year}
+              </div>
+              <div className="col-span-2">
+                <span className="text-gray-400">Enrollment:</span> {profile.enrollment}
+              </div>
+            </div>
+
+            <div className="border-t border-white/10 pt-3 mt-3">
+              <div className="text-xs text-gray-400 mb-2">Performance Statistics</div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="border border-white/10 rounded-md p-3 text-center">
+                  <div className="text-xs text-gray-400 mb-1">Contest Rating</div>
+                  <div className="text-lg font-bold">{profile.rating}</div>
+                </div>
+                <div className="border border-white/10 rounded-md p-3 text-center">
+                  <div className="text-xs text-gray-400 mb-1">Problems Solved</div>
+                  <div className="text-lg font-bold">{profile.solvedCount}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-3 pt-3 border-t border-white/10 text-center">
+              <div className="text-sm text-gray-400">Total Score</div>
+              <div className="text-2xl font-bold">{profile.score.toFixed(2)}</div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
