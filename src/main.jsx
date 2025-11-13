@@ -7,6 +7,8 @@ import Home from './pages/Home.jsx'
 import DSA from './pages/DSA.jsx'
 import Dev from './pages/Dev.jsx'
 import Opensource from './pages/Opensource.jsx'
+import { registerSW } from 'virtual:pwa-register';
+
 
 const router = createBrowserRouter(
   [
@@ -41,3 +43,14 @@ createRoot(document.getElementById('root')).render(
     <RouterProvider router={router}/>
   </StrictMode>,
 )
+
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm('New version available! Reload?')) {
+      updateSW(true);
+    }
+  },
+  onOfflineReady() {
+    console.log('App ready to work offline');
+  }
+});
